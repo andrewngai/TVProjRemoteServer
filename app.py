@@ -5,9 +5,10 @@ from time import sleep
 app = Flask(__name__)
 bluetoothSerial = serial.Serial("/dev/rfcomm1",baudrate=9600)
 
-count = 189
-bluetoothSerial.write(str(count))
-print bluetoothSerial.readLine()
+
+
+bluetoothSerial.write("testing")
+
 
 @app.route('/')
 def index():
