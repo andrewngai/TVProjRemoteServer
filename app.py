@@ -1,17 +1,24 @@
 import serial
+import os
 from flask import Flask, render_template
-from time import sleep
+
 
 app = Flask(__name__)
-bluetoothSerial = serial.Serial("/dev/rfcomm1",baudrate=9600)
+if not(os.path.exists("/dev/rfcomm0")):
+    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
 
+btSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
 
-
-bluetoothSerial.write("testing")
-
+btSerial.write(b"testing")
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+
+@app.route('/testpage')
+def testpage():
+    # btSerial.write(b"testpage loaded\n")
     return render_template('index.html')
 
 if __name__ == '__main__':
