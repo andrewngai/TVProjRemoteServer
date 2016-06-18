@@ -1,6 +1,6 @@
 import serial
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
@@ -16,9 +16,17 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/testpage')
+@app.route('/test')
 def testpage():
-    # btSerial.write(b"testpage loaded\n")
+    btSerial.write(b"testpage loaded\n")
+    return render_template('index.html')
+    # return 'testPage'
+
+@app.route('/sendThings', methods = ['POST'])
+def getresults():
+    print("I got it!")
+    print(request.form['data'])
+    print("Switch is "+ request.form["switch"])
     return render_template('index.html')
 
 if __name__ == '__main__':

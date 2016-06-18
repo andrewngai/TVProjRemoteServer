@@ -1,5 +1,29 @@
 <html>
 <body>
+<link rel="stylesheet" href='/static/style.css'/>
 <h1>Hello from a template!</h1>
+<a href="tvremote.local:5000/testpage"><button>Test Page</button></a>
+<form action="sendThings" method="post">
+data = <input type="text" name="data"><br>
+<input type="submit" value="Submit">
+<p>
+<input type="radio" id="onRadio" name="switch" value="on">ON<input type="radio" name="switch" id="offRadio" value="off">OFF</br>
+</p>
+
+</form>
+<button onclick="setRadio('on')">Set Radio On</button>
 </body>
+<script>
+function setRadio(status){
+    if(status.localeCompare("on")==0){
+        document.getElementById("onRadio").checked=true;
+        document.getElementById("offRadio").checked=false;
+
+    }else{
+        document.getElementById("onRadio").checked=false;
+        document.getElementById("offRadio").checked=true;
+    }
+}
+</script>
 </html>
+
