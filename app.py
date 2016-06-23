@@ -29,8 +29,12 @@ def getresults():
     print("Switch is "+ request.form["switch"])
     return render_template('index.html')
 
-@app.route('/presetconfig')
+@app.route('/getConfig')
 def getpresets():
+    return render_template('presetconfig.html')
+
+@app.route('/presetconfig')
+def displayConfigPage():
     return render_template('presetconfig.html')
 
 if __name__ == '__main__':
