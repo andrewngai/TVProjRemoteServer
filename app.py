@@ -87,6 +87,19 @@ def setpresets():
 
     return render_template('presetconfig.html')
 
+@app.route('/getConfig', methods=['GET','POST'])
+def getConfig():
+    filename = ""
+    if request.args['congregation'] == "canto":
+        filename = "cantoPreset.json"
+    elif request.args['congregation'] == "eng":
+        filename = "engPreset.json"
+    elif request.args['congregation'] == "mando":
+        filename = "mandoPreset.json"
+    return open(filename, 'r').read()
+
+
+
 @app.route('/presetconfig')
 def displayConfigPage():
     return render_template('presetconfig.html')
