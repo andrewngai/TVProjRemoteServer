@@ -1,5 +1,6 @@
 import serial
 import os
+import json
 from flask import Flask, render_template, request
 
 
@@ -29,8 +30,61 @@ def getresults():
     print("Switch is "+ request.form["switch"])
     return render_template('index.html')
 
-@app.route('/getConfig')
-def getpresets():
+@app.route('/setConfig', methods = ['POST'])
+def setpresets():
+    print("Got setConfig Response")
+    print(request.form["congregationSel"])
+    print(request.form["projLeft"])
+    print(request.form["projRight"])
+    print(request.form["tvAnnex"])
+    print(request.form["tvAnnexInput"])
+    print(request.form["tvReverse"])
+    print(request.form["tvReverseInput"])
+    print(request.form["tvBalcony"])
+    print(request.form["tvBalconyInput"])
+    print(request.form["tvFireplace"])
+    print(request.form["tvFireplaceInput"])
+
+    presetData = {"projLeft":"",
+                "projRight":"",
+                "tvAnnex":"",
+                "tvAnnexInput":"",
+                "tvReverse":"",
+                "tvReverseInput":"",
+                "tvBalcony":"",
+                "tvBalconyInput":"",
+                "tvFireplace":"",
+                "tvFireplaceInput":""
+                }
+
+    presetData["projLeft"] = request.form["projLeft"]
+    presetData["projRight"] = request.form["projRight"]
+    presetData["tvAnnex"] = request.form["tvAnnex"]
+    presetData["tvAnnexInput"] = request.form["tvAnnexInput"]
+    presetData["tvReverse"] = request.form["tvReverse"]
+    presetData["tvReverseInput"] = request.form["tvReverseInput"]
+    presetData["tvBalcony"] = request.form["tvBalcony"]
+    presetData["tvBalconyInput"] = request.form["tvBalconyInput"]
+    presetData["tvFireplace"] = request.form["tvFireplace"]
+    presetData["tvFireplaceInput"] = request.form["tvFireplaceInput"]
+
+    presetToConfig = request.form["congregationSel"]
+    filename = ""
+    if presetToConfig == "canto":
+        filename = "cantoPreset.json"
+    elif presetToConfig == "eng":
+        filename = "engPreset.json"
+    elif presetToConfig == "mando":
+        filename = "mandoPreset.json"
+
+    f = open(filename, 'w')
+    f.write(json.dumps(presetData))
+    f.close()
+
+
+
+
+
     return render_template('presetconfig.html')
 
 @app.route('/presetconfig')
