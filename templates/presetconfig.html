@@ -92,7 +92,7 @@
 </body>
 <script>
     function submitButtonAction(){
-        if(checkform()){
+        if(checkForm()){
             document.getElementById("configForm").submit();
         }else{
             alert("Please fill in all the fields");
@@ -100,9 +100,35 @@
 
     }
 
+    function checkForm(){
+        var isConSelValid           = isFieldValid("congregationSel");
+        var isProjLeftValid         = isFieldValid("projLeft");
+        var isProjRightValid        = isFieldValid("projRight");
+        var isTvAnnexValid          = isFieldValid("tvAnnex");
+        var isTvAnnexInputValid     = isFieldValid("tvAnnexInput");
+        var isTvReverseValid        = isFieldValid("tvReverse");
+        var isTvReverseInputValid   = isFieldValid("tvReverseInput");
+        var isTvBalconyValid        = isFieldValid("tvBalcony");
+        var isTvBalconyInputValid   = isFieldValid("tvBalconyInput");
+        var isTvFireplaceValid      = isFieldValid("tvFireplace");
+        var isTvFireplaceInputValid = isFieldValid("tvFireplaceInput");
 
-    function checkform(){
-        var x = document.getElementsByName("congregationSel");
+        return isConSelValid &&
+               isProjLeftValid &&
+               isProjRightValid &&
+               isTvAnnexValid &&
+               isTvAnnexInputValid &&
+               isTvReverseValid &&
+               isTvReverseInputValid &&
+               isTvBalconyValid &&
+               isTvBalconyInputValid &&
+               isTvFireplaceValid &&
+               isTvFireplaceInputValid ;
+    }
+
+
+    function isFieldValid(field){
+        var x = document.getElementsByName(field);
         var i;
 
         var isValid = 0;
@@ -119,5 +145,7 @@
 
         return isValid;
     }
+
+
 </script>
 </html>
