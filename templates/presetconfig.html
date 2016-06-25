@@ -6,7 +6,7 @@
 </head>
 <body>
     This is the preset config page
-    <form action="setConfig" method="post">
+    <form action="setConfig" method="post" id="configForm">
     
         <p>
             Congregation:
@@ -28,18 +28,22 @@
             <input type="radio" id="projRightOffRadio"        name="projRight" value="off">OFF
             <input type="radio" id="projRightNoActionRadio"   name="projRight" value="na">No Action
         </p>
-        
+        <br/>
         <p>
             TV Annex:
             <input type="radio" id="tvAnnexOnRadio"         name="tvAnnex" value="on">ON
             <input type="radio" id="tvAnnexOffRadio"        name="tvAnnex" value="off">OFF
             <input type="radio" id="tvAnnexNoActionRadio"   name="tvAnnex" value="na">No Action
         
-            | Input:
+
+        </p>
+
+        <p>
+            TV Annex Input:
             <input type="radio" id="tvAnnexInputDefaultRadio"  name="tvAnnexInput" value="on">Input X
             <input type="radio" id="tvAnnexInputNoActionRadio" name="tvAnnexInput" value="na">No Action
         </p>
-        
+        <br/>
         <p>
             TV Reverse:
             <input type="radio" id="tvReverseOnRadio"         name="tvReverse" value="on">ON
@@ -53,7 +57,7 @@
             <input type="radio" id="tvReverseInputNoActionRadio" name="tvReverseInput" value="na">No Action
         
         </p>
-        
+        <br/>
         <p>
             TV Balcony:
             <input type="radio" id="tvBalconyOnRadio"         name="tvBalcony" value="on">ON
@@ -67,7 +71,7 @@
             <input type="radio" id="tvBalconyInputNoActionRadio" name="tvBalconyInput" value="na">No Action
         
         </p>
-        
+        <br/>
         <p>
             TV Fireplace:
             <input type="radio" id="tvFireplaceOnRadio"         name="tvFireplace" value="on">ON
@@ -81,8 +85,39 @@
             <input type="radio" id="tvFireplaceInputNoActionRadio" name="tvFireplaceInput" value="na">No Action
         
         </p>
-        
-        <input type="submit" value="Submit">
+        <br/>
+
     </form>
+    <Button onclick="submitButtonAction()">Submit</Button>
 </body>
+<script>
+    function submitButtonAction(){
+        if(checkform()){
+            document.getElementById("configForm").submit();
+        }else{
+            alert("Please fill in all the fields");
+        }
+
+    }
+
+
+    function checkform(){
+        var x = document.getElementsByName("congregationSel");
+        var i;
+
+        var isValid = 0;
+
+        for(i = 0;i<x.length;i++){
+            if(x[i].checked == true){
+                isValid = 1;
+                break;
+            }
+            if(i == x.length-1){
+                isValid = 0;
+            }
+        }
+
+        return isValid;
+    }
+</script>
 </html>
