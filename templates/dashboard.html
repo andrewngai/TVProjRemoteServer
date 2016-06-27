@@ -13,8 +13,20 @@
 </body>
 
 <script>
+    var deviceCommands;
     function startupScript(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', "tvremote.local:5000/getDeviceCommands", true);
+        xhr.send();
         
+        xhr.onreadystatechange = processRequest;
+    }
+    
+    function processRequest(e){
+        if(xhr.readyState == 4 xhr.status == 200){
+            deviceCommands = xhr.responseText;
+            alert(deviceCommands);
+        }
     }
 </script>
 </html>
