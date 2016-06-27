@@ -32,29 +32,16 @@ def getresults():
 
 @app.route('/setConfig', methods = ['POST'])
 def setpresets():
-    print("Got setConfig Response")
-    print(request.form["congregationSel"])
-    print(request.form["projLeft"])
-    print(request.form["projRight"])
-    print(request.form["tvAnnex"])
-    print(request.form["tvAnnexInput"])
-    print(request.form["tvReverse"])
-    print(request.form["tvReverseInput"])
-    print(request.form["tvBalcony"])
-    print(request.form["tvBalconyInput"])
-    print(request.form["tvFireplace"])
-    print(request.form["tvFireplaceInput"])
-
-    presetData = {"projLeft":"",
-                "projRight":"",
-                "tvAnnex":"",
-                "tvAnnexInput":"",
-                "tvReverse":"",
-                "tvReverseInput":"",
-                "tvBalcony":"",
-                "tvBalconyInput":"",
-                "tvFireplace":"",
-                "tvFireplaceInput":""
+    presetData = {"projLeft": "",
+                "projRight": "",
+                "tvAnnex": "",
+                "tvAnnexInput": "",
+                "tvReverse": "",
+                "tvReverseInput": "",
+                "tvBalcony": "",
+                "tvBalconyInput": "",
+                "tvFireplace": "",
+                "tvFireplaceInput": ""
                 }
 
     presetData["projLeft"] = request.form["projLeft"]
