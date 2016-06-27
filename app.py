@@ -74,7 +74,7 @@ def setpresets():
 
     return render_template('presetconfig.html')
 
-@app.route('/getConfig', methods=['GET','POST'])
+@app.route('/getConfig', methods=['GET'])
 def getConfig():
     filename = ""
     if request.args['congregation'] == "canto":
@@ -85,7 +85,9 @@ def getConfig():
         filename = "mandoPreset.json"
     return open(filename, 'r').read()
 
-
+@app.route('/getDeviceCommands', methods=["GET"])
+def getDeviceCommands():
+    return open("DeviceCommands.json", 'r').read()
 
 @app.route('/presetconfig')
 def displayConfigPage():
