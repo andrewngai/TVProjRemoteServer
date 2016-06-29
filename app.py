@@ -1,5 +1,6 @@
 #import serial
 import os
+import os.path
 import json
 from flask import Flask, render_template, request
 
@@ -83,7 +84,12 @@ def getConfig():
         filename = "engPreset.json"
     elif request.args['congregation'] == "mando":
         filename = "mandoPreset.json"
-    return open(filename, 'r').read()
+
+    if os.path.isfile(filename):
+        return open(filename, 'r').read()
+    else:
+        return "File Not Found"
+
 
 @app.route('/getDeviceCommands', methods=['GET'])
 def getDeviceCommands():

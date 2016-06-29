@@ -11,9 +11,9 @@
     
         <p>
             Congregation:
-            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange('canto')">Cantonese
-            <input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange('eng')">English
-            <input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange('mando')">Mandarin
+            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange()">Cantonese
+            <input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange()">English
+            <input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange()">Mandarin
         </p>
         
         <p>
@@ -89,7 +89,7 @@
         <br/>
 
     </form>
-    <Button onclick="submitButtonAction()">Submit</Button>
+    <Button onclick="submitButtonAction()">Submit</Button>  <a href="./dashboard">Go To Dashboard</a>
     <p></p>
     <br/>
 </body>
@@ -149,25 +149,32 @@
         return isValid;
     }
 
-    var deviceCommands;
+    var congregationPreset;
     var getPresetRequest;
-    function congregationChange(congregation){
+    function congregationChange(){
+        var form_elements = document.getElementById('configForm').elements;
+        var congregation = form_elements['congregationSel'].value;
+        fetchCongregationPreset(congregation);
+    }
+
+
+
+    function fetchCongregationPreset(congregation){
         getPresetRequest = new XMLHttpRequest();
         var url = "getConfig?congregation=" + congregation;
         getPresetRequest.open("GET",url, true);
         getPresetRequest.send();
 
-        getPresetRequest.addEventListener("readystatechange", processRequest, false);
-    }
+        getPresetRequest.addEventListener("readystatechange",
+            function (){
+                if(getPresetRequest.readyState == 4 && getPresetRequest.status == 200){
+                    congregationPreset = getPresetRequest.responseText;
+                    alert(congregationPreset);
+                }
+        }, false);
+     }
 
-    function processRequest(e){
-        if(getPresetRequest.readyState == 4 && getPresetRequest.status == 200){
-            deviceCommands = getPresetRequest.responseText;
-            alert(deviceCommands);
-        }else if(getPresetRequest.readyState == 4 && getPresetRequest.status == 500){
-            alert("data not found");
-        }
-    }
+
 
 
 </script>
