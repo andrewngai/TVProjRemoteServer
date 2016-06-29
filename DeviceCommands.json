@@ -1,1 +1,10 @@
-{"sharpOn":"RSPW1000\n","sharpOff":"RSPW0000\n"}
+{
+  "SHARP":{
+    "ON":"RSPW1000\n",
+    "OFF":"RSPW0000\n"
+  },
+  "ACER":{
+    "ON":"ON_COMMAND",
+    "OFF":"OFF_COMMAND"
+  }
+}
