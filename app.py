@@ -73,7 +73,7 @@ def setpresets():
 
 
 
-    return render_template('presetconfig.html')
+    return render_template('setConfigRedirect.html')
 
 @app.route('/getConfig', methods=['GET'])
 def getConfig():
