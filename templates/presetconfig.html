@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <title>Preset Config</title>
 </head>
+<body>
 
-    This is the preset config page
+    <h1>Preset Config</h1>
     <form action="setConfig" method="post" id="configForm">
     
         <p>
             Congregation:
-            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange()">Cantonese
-            <input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange()">English
-            <input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange()">Mandarin
+
+            </br><input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange()">Cantonese
+            </br><input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange()">English
+            </br><input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange()">Mandarin
         </p>
-        
         <p>
             Projector Left:
             <input type="radio" id="projLeftOnRadio"         name="projLeft" value="on">ON
@@ -151,13 +152,12 @@
 
     var congregationPreset;
     var getPresetRequest;
+
     function congregationChange(){
         var form_elements = document.getElementById('configForm').elements;
         var congregation = form_elements['congregationSel'].value;
         fetchCongregationPreset(congregation);
     }
-
-
 
     function fetchCongregationPreset(congregation){
         getPresetRequest = new XMLHttpRequest();
