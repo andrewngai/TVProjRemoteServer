@@ -11,9 +11,9 @@
     
         <p>
             Congregation:
-            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange()">Cantonese
-            <input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange()">English
-            <input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange()">Mandarin
+            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange('canto')">Cantonese
+            <input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange('eng')">English
+            <input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange('mando')">Mandarin
         </p>
         
         <p>
@@ -149,8 +149,24 @@
         return isValid;
     }
 
-    function congregationChange(){
-        alert("Congregation Changed");
+    var deviceCommands;
+    var getPresetRequest;
+    function congregationChange(congregation){
+        getPresetRequest = new XMLHttpRequest();
+        var url = "getConfig?congregation=" + congregation;
+        getPresetRequest.open("GET",url, true);
+        getPresetRequest.send();
+
+        getPresetRequest.addEventListener("readystatechange", processRequest, false);
+    }
+
+    function processRequest(e){
+        if(getPresetRequest.readyState == 4 && getPresetRequest.status == 200){
+            deviceCommands = getPresetRequest.responseText;
+            alert(deviceCommands);
+        }else if(getPresetRequest.readyState == 4 && getPresetRequest.status == 500){
+            alert("data not found");
+        }
     }
 
 
