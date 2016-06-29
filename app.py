@@ -1,16 +1,16 @@
-import serial
+#import serial
 import os
 import json
 from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-if not(os.path.exists("/dev/rfcomm0")):
-    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
+#if not(os.path.exists("/dev/rfcomm0")):
+#    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
 
-btSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+#btSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
 
-btSerial.write(b"testing")
+#btSerial.write(b"testing")
 
 @app.route('/')
 def index():
@@ -19,7 +19,7 @@ def index():
 
 @app.route('/test')
 def testpage():
-    btSerial.write(b"testpage loaded\n")
+#    btSerial.write(b"testpage loaded\n")
     return render_template('index.html')
     # return 'testPage'
 
@@ -85,13 +85,17 @@ def getConfig():
         filename = "mandoPreset.json"
     return open(filename, 'r').read()
 
-@app.route('/getDeviceCommands', methods=["GET"])
+@app.route('/getDeviceCommands', methods=['GET'])
 def getDeviceCommands():
     return open("DeviceCommands.json", 'r').read()
 
 @app.route('/presetconfig')
 def displayConfigPage():
     return render_template('presetconfig.html')
+
+@app.route('/dashboard')
+def displayDashboard():
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
     <meta charset="UTF-8">
     <title>Preset Config</title>
 </head>
-<body>
+
     This is the preset config page
     <form action="setConfig" method="post" id="configForm">
     
         <p>
             Congregation:
-            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto">Cantonese
-            <input type="radio" id="congregationEng"    name="congregationSel" value="eng">English
-            <input type="radio" id="congregationMando"  name="congregationSel" value="mando">Mandarin
+            <input type="radio" id="congregationCanto"  name="congregationSel" value="canto" onclick="congregationChange()">Cantonese
+            <input type="radio" id="congregationEng"    name="congregationSel" value="eng" onclick="congregationChange()">English
+            <input type="radio" id="congregationMando"  name="congregationSel" value="mando" onclick="congregationChange()">Mandarin
         </p>
         
         <p>
@@ -89,6 +90,8 @@
 
     </form>
     <Button onclick="submitButtonAction()">Submit</Button>
+    <p></p>
+    <br/>
 </body>
 <script>
     function submitButtonAction(){
@@ -144,6 +147,10 @@
         }
 
         return isValid;
+    }
+
+    function congregationChange(){
+        alert("Congregation Changed");
     }
 
 
