@@ -62,9 +62,6 @@ function isFieldValid(field){
 var congregationPreset;
 var getPresetRequest;
 var presetJson;
-if (!presetJson){
-    presetJson = {};
-}
 
 function congregationChange(){
     var form_elements = document.getElementById('configForm').elements;
