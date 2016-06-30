@@ -1,3 +1,7 @@
+/*
+Javascript file for presetconfig.html
+*/
+
 function submitButtonAction(){
         if(checkForm()){
             document.getElementById("configForm").submit();

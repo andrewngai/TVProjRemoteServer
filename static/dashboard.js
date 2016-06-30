@@ -1,3 +1,8 @@
+/*
+Javascript file for dashboard.html
+
+*/
+
 var deviceCommands;
 var xhr;
 function startupScript(){
@@ -19,4 +24,6 @@ function fetchDeviceCommands(){
                 alert("Device Commands Fetch Failed");
             }
     }, false);
+
+
 }
