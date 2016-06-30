@@ -3,7 +3,7 @@ Javascript file for presetconfig.html
 */
 
 function submitButtonAction(){
-        if(checkForm()){
+        if(isFormValid()){
             document.getElementById("configForm").submit();
         }else{
             alert("Please fill in all the fields");
@@ -13,7 +13,7 @@ function submitButtonAction(){
 
 
 
-function checkForm(){
+function isFormValid(){
     var isConSelValid           = isFieldValid("congregationSel");
     var isProjLeftValid         = isFieldValid("projLeft");
     var isProjRightValid        = isFieldValid("projRight");
