@@ -28,7 +28,7 @@ def testpage():
 def getresults():
     print("I got it!")
     print(request.form['data'])
-    print("Switch is "+ request.form["switch"])
+    print("Switch is " + request.form["switch"])
     return render_template('index.html')
 
 @app.route('/setConfig', methods = ['POST'])
@@ -86,14 +86,14 @@ def getConfig():
         filename = "mandoPreset.json"
 
     if os.path.isfile(filename):
-        return open(filename, 'r').read()
+        return open(filename).read()
     else:
         return "File Not Found"
 
 
 @app.route('/getDeviceCommands', methods=['GET'])
 def getDeviceCommands():
-    return open("DeviceCommands.json", 'r').read()
+    return open("DeviceCommands.json").read()
 
 @app.route('/presetconfig')
 def displayConfigPage():
@@ -102,6 +102,18 @@ def displayConfigPage():
 @app.route('/dashboard')
 def displayDashboard():
     return render_template('dashboard.html')
+
+@app.route('/sendCommand',methods=['GET'])
+def sendCommand():
+
+    device = request.args['device']
+    command = request.args['command']
+
+    f = open("DeviceCommands.json")
+    commandsJson = json.loads(f.read())
+
+    return commandsJson[device][command]
+
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
