@@ -88,7 +88,7 @@ def getConfig():
     if os.path.isfile(filename):
         return open(filename).read()
     else:
-        return "File Not Found"
+        return {"File": "Not Found"}
 
 
 @app.route('/getDeviceCommands', methods=['GET'])
