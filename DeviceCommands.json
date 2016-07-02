@@ -1,7 +1,7 @@
 {
   "SHARP":{
-    "ON":"RSPW1000\n",
-    "OFF":"RSPW0000\n"
+    "ON":"POWR1   \r",
+    "OFF":"POWR0   \r"
   },
   "ACER":{
     "ON":"ON_COMMAND",
