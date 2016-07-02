@@ -8,9 +8,9 @@ Python library Flask will be used to host the webpage for :<br/>
 
 Notes:
 To add new bluetooth receivers:
-1. modify /etc/bluetooth/rfcomm.conf
-2. Go into bluetoothctl
-3. Trust device 
-4. "agent NoInputNoOutput"
-5. "default-agent"
-6. pair device (PIN: 1234)
+1. modify /etc/bluetooth/rfcomm.conf<br />
+2. Go into bluetoothctl<br />
+3. Trust device <br />
+4. "agent NoInputNoOutput"<br />
+5. "default-agent"<br />
+6. pair device (PIN: 1234)<br />
