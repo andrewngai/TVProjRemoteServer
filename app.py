@@ -129,5 +129,19 @@ def status():
     if not btSerial2.isOpen():
         rfcomm1 = "offline"
     return render_template('status.html',rfcomm0=rfcomm0,rfcomm1=rfcomm1)
+    
+@app.route('/applyPreset',methods=['GET'])
+def applyPreset():
+    congregationPreset = request.args['congregation']
+    
+    if congregationPreset == "canto":
+        a = 1
+    elif congregationPreset == "eng":
+        a = 2
+    elif congregationPreset == "mando":
+        a = 3
+        
+    return "OKOKOK"
+    
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
