@@ -6,8 +6,8 @@ Python library Flask will be used to host the webpage for :<br/>
 
 
 
-Notes:
-To add new bluetooth receivers:
+Notes:<br />
+To add new bluetooth receivers:<br />
 1. modify /etc/bluetooth/rfcomm.conf<br />
 2. Go into bluetoothctl<br />
 3. Trust device <br />
