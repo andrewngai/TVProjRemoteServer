@@ -1,4 +1,4 @@
-#import serial
+import serial
 import os
 import os.path
 import json
@@ -6,12 +6,15 @@ from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-#if not(os.path.exists("/dev/rfcomm0")):
-#    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
+if not(os.path.exists("/dev/rfcomm0")):
+    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
+if not (os.path.exists("/dev/rfcomm1")):
+    os.system("sudo rfcomm bind 1 30:14:11:21:15:76")
 
-#btSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+btSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+btSerial2 = serial.Serial("/dev/rfcomm1", baudrate=9600)
 
-#btSerial.write(b"testing")
+btSerial2.write(b"testing")
 
 @app.route('/')
 def index():
@@ -111,7 +114,10 @@ def sendCommand():
 
     f = open("DeviceCommands.json")
     commandsJson = json.loads(f.read())
-
+    if device == "SHARP":
+        btSerial.write(bytes(commandsJson[device][command], 'UTF-8'))
+    elif device == "ACER":
+        btSerial2.write(bytes(commandsJson[device][command], 'UTF-8'))
     return commandsJson[device][command]
 
 

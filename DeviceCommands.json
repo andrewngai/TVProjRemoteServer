@@ -1,10 +1,12 @@
 {
   "SHARP":{
     "ON":"POWR1   \r",
-    "OFF":"POWR0   \r"
+    "OFF":"POWR0   \r",
+    "INPUT MAC MINI":"IAVD2   \r",
+    "INPUT APPLE TV":"IAVD3   \r"
   },
   "ACER":{
-    "ON":"ON_COMMAND",
-    "OFF":"OFF_COMMAND"
+    "ON":"ON_COMMAND\n",
+    "OFF":"OFF_COMMAND\n"
   }
 }
