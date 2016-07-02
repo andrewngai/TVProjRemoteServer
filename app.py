@@ -120,6 +120,14 @@ def sendCommand():
         btSerial2.write(bytes(commandsJson[device][command], 'UTF-8'))
     return commandsJson[device][command]
 
-
+@app.route('/status')
+def status():
+    rfcomm0 = "online"
+    rfcomm1 = "online"
+    if not btSerial.isOpen():
+        rfcomm0 = "offline"
+    if not btSerial2.isOpen():
+        rfcomm1 = "offline"
+    return render_template('status.html',rfcomm0=rfcomm0,rfcomm1=rfcomm1)
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
