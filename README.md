@@ -3,3 +3,14 @@ This Repo is a repo for a webserver that communicates to a maximum of 7 bluetoot
 Python library Flask will be used to host the webpage for :<br/>
 1. Direct Control of each switch<br />
 2. Presets macros configs<br />
+
+
+
+Notes:<br />
+To add new bluetooth receivers:<br />
+1. modify /etc/bluetooth/rfcomm.conf<br />
+2. Go into bluetoothctl<br />
+3. Trust device <br />
+4. "agent NoInputNoOutput"<br />
+5. "default-agent"<br />
+6. pair device (PIN: 1234)<br />
