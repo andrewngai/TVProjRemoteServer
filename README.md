@@ -4,7 +4,8 @@ Python library Flask will be used to host the webpage for :<br/>
 1. Direct Control of each switch<br />
 2. Presets macros configs<br />
 
-
+Schematic: <br/>
+![alt tag](https://cloud.githubusercontent.com/assets/14185939/16537569/17fcd0ce-3fbb-11e6-9532-a1019858d785.png)
 
 Notes:<br />
 To add new bluetooth receivers:<br />
