@@ -27,9 +27,9 @@ function fetchDeviceCommands(){
     }, false);
 }
 
-function sendCommand(device, command){
+function sendCommand(device, command, channel){
     var xhr = new XMLHttpRequest();
-    var url = "sendCommand?device=" + device + "&command=" + command;
+    var url = "sendCommand?device=" + device + "&command=" + command + "&channel=" + channel;
     xhr.open("GET",url, true);
     xhr.send();
 
