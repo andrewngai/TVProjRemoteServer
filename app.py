@@ -1,4 +1,4 @@
-# import serial
+import serial
 import os
 import os.path
 import json
@@ -6,18 +6,25 @@ from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-# if not(os.path.exists("/dev/rfcomm0")):
-#     os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
-# if not (os.path.exists("/dev/rfcomm1")):
-#     os.system("sudo rfcomm bind 1 30:14:11:21:15:76")
-#
-# btSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
-# btSerial2 = serial.Serial("/dev/rfcomm1", baudrate=9600)
-#
-# btSerial2.write(b"testing")
-#
-# deviceDictionary = {"1": btSerial,
-#                     "2": btSerial2}
+if not(os.path.exists("/dev/rfcomm0")):
+    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
+if not (os.path.exists("/dev/rfcomm1")):
+    os.system("sudo rfcomm bind 1 30:14:11:21:15:76")
+
+leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
+annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
+reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
+balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
+fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+
+deviceDictionary = {"0": leftProjSerial,
+                    "1": rightProjSerial,
+                    "2": annexTVSerial,
+                    "3": reverseTVSerial,
+                    "4": balconyTVSerial,
+                    "5": fireplaceTVSerial
+                    }
 
 @app.route('/')
 def index():
@@ -26,7 +33,7 @@ def index():
 
 @app.route('/test')
 def testpage():
-#    btSerial.write(b"testpage loaded\n")
+    leftProjSerial.write(b"testpage loaded\n")
     return render_template('index.html')
     # return 'testPage'
 
@@ -122,10 +129,7 @@ def sendCommand():
     #TODO
     #implement deviceDictionary for different btSerial
 
-    # if device == "SHARP":
-    #     btSerial.write(bytes(commandsJson[device][command], 'UTF-8'))
-    # elif device == "ACER":
-    #     btSerial2.write(bytes(commandsJson[device][command], 'UTF-8'))
+    deviceDictionary[channel].write(bytes(commandsJson[device][command], 'UTF-8'))
 
     return commandsJson[device][command]
 
