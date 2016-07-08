@@ -28,6 +28,7 @@ deviceDictionary = {"0": leftProjSerial,
                     # "5": fireplaceTVSerial
                     }
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -39,15 +40,17 @@ def testpage():
     return render_template('index.html')
     # return 'testPage'
 
-@app.route('/sendThings', methods = ['POST'])
-def getresults():
+
+@app.route('/sendThings', methods=['POST'])
+def get_results():
     print("I got it!")
     print(request.form['data'])
     print("Switch is " + request.form["switch"])
     return render_template('index.html')
 
-@app.route('/setConfig', methods = ['POST'])
-def setpresets():
+
+@app.route('/setConfig', methods=['POST'])
+def set_presets():
     presetData = {"projLeft": "",
                 "projRight": "",
                 "tvAnnex": "",
@@ -71,27 +74,24 @@ def setpresets():
     presetData["tvFireplace"] = request.form["tvFireplace"]
     presetData["tvFireplaceInput"] = request.form["tvFireplaceInput"]
 
-    presetToConfig = request.form["congregationSel"]
+    preset_to_config = request.form["congregationSel"]
     filename = ""
-    if presetToConfig == "canto":
+    if preset_to_config == "canto":
         filename = "cantoPreset.json"
-    elif presetToConfig == "eng":
+    elif preset_to_config == "eng":
         filename = "engPreset.json"
-    elif presetToConfig == "mando":
+    elif preset_to_config == "mando":
         filename = "mandoPreset.json"
 
     f = open(filename, 'w')
     f.write(json.dumps(presetData))
     f.close()
 
-
-
-
-
     return render_template('setConfigRedirect.html')
 
+
 @app.route('/getConfig', methods=['GET'])
-def getConfig():
+def get_config():
     filename = ""
     if request.args['congregation'] == "canto":
         filename = "cantoPreset.json"
@@ -107,33 +107,41 @@ def getConfig():
 
 
 @app.route('/getDeviceCommands', methods=['GET'])
-def getDeviceCommands():
+def get_device_commands():
     return open("DeviceCommands.json").read()
 
+
 @app.route('/presetconfig')
-def displayConfigPage():
+def display_config_page():
     return render_template('presetconfig.html')
 
+
 @app.route('/dashboard')
-def displayDashboard():
+def display_dashboard():
     return render_template('dashboard.html')
 
-@app.route('/sendCommand',methods=['GET'])
-def sendCommand():
+
+@app.route('/sendCommand', methods=['GET'])
+def send_command():
+    """Handles html send commands from json file"""
 
     device = request.args['device']
     command = request.args['command']
     channel = request.args['channel']
-
     f = open("DeviceCommands.json")
-    commandsJson = json.loads(f.read())
+    commands_json = json.loads(f.read())
 
-    #TODO
-    #implement deviceDictionary for different btSerial
+    # TODO
+    # implement deviceDictionary for different btSerial
 
-    deviceDictionary[channel].write(bytes(commandsJson[device][command], 'UTF-8'))
+    return write_command(channel, commands_json[device][command])
 
-    return commandsJson[device][command]
+
+def write_command(channel, data):
+    """Writes data to channel"""
+    deviceDictionary[channel].write(bytes(data, 'UTF-8'))
+    return data
+
 
 @app.route('/status')
 def status():
@@ -143,20 +151,22 @@ def status():
     #     rfcomm0 = "offline"
     # if not btSerial2.isOpen():
     #     rfcomm1 = "offline"
-    return render_template('status.html',rfcomm0=rfcomm0,rfcomm1=rfcomm1)
+    return render_template('status.html', rfcomm0=rfcomm0, rfcomm1=rfcomm1)
+
+
+@app.route('/applyPreset', methods=['GET'])
+def applypreset():
+    """Applies(Executes) a preset"""
+    congregationpreset = request.args['congregation']
     
-@app.route('/applyPreset',methods=['GET'])
-def applyPreset():
-    congregationPreset = request.args['congregation']
-    
-    if congregationPreset == "canto":
+    if congregationpreset == "canto":
         a = 1
-    elif congregationPreset == "eng":
+    elif congregationpreset == "eng":
         a = 2
-    elif congregationPreset == "mando":
+    elif congregationpreset == "mando":
         a = 3
         
-    return "OKOKOK"
+    return "OKOKOK" + a
     
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
