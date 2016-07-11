@@ -6,19 +6,19 @@ from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-if not(os.path.exists("/dev/rfcomm0")):
-    os.system("sudo rfcomm bind 0 30:14:11:25:14:38")
-if not (os.path.exists("/dev/rfcomm1")):
-    os.system("sudo rfcomm bind 1 30:14:11:21:15:76")
-if not (os.path.exists("/dev/rfcomm2")):
-    os.system("sudo rfcomm bind 2 98:D3:31:FC:25:47")
+f = open("deviceMac.json")
+address_json = json.loads(f.read())
+
+for i in range(0, 5):
+    if not(os.path.exists("/dev/rfcomm"+str(i))):
+        os.system("sudo rfcomm bind " + str(i) + " " + address_json[str(i)])
 
 leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
 rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
 annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
-# reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
-# balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
-# fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
+balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
+fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
 
 deviceDictionary = {"0": leftProjSerial,
                     "1": rightProjSerial,
@@ -83,9 +83,9 @@ def set_presets():
     elif preset_to_config == "mando":
         filename = "mandoPreset.json"
 
-    f = open(filename, 'w')
-    f.write(json.dumps(presetData))
-    f.close()
+    g = open(filename, 'w')
+    g.write(json.dumps(presetData))
+    g.close()
 
     return render_template('setConfigRedirect.html')
 
@@ -128,8 +128,8 @@ def send_command():
     device = request.args['device']
     command = request.args['command']
     channel = request.args['channel']
-    f = open("DeviceCommands.json")
-    commands_json = json.loads(f.read())
+    h = open("DeviceCommands.json")
+    commands_json = json.loads(h.read())
 
     # TODO
     # implement deviceDictionary for different btSerial
