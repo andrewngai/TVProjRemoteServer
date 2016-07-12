@@ -13,20 +13,20 @@ for i in range(0, 6):
     if not(os.path.exists("/dev/rfcomm"+str(i))):
         os.system("sudo rfcomm bind " + str(i) + " " + address_json[str(i)])
 
-# leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
-# rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
-# annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
-# reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
-# balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
-# fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
-#
-# deviceDictionary = {"0": leftProjSerial,
-#                     "1": rightProjSerial,
-#                     "2": annexTVSerial,
-#                     "3": reverseTVSerial,
-#                     "4": balconyTVSerial,
-#                     "5": fireplaceTVSerial
-#                     }
+leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
+annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
+reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
+balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
+fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+
+deviceDictionary = {"0": leftProjSerial,
+                    "1": rightProjSerial,
+                    "2": annexTVSerial,
+                    "3": reverseTVSerial,
+                    "4": balconyTVSerial,
+                    "5": fireplaceTVSerial
+                    }
 
 
 
