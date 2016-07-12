@@ -9,7 +9,7 @@ app = Flask(__name__)
 f = open("deviceMac.json")
 address_json = json.loads(f.read())
 
-for i in range(0, 5):
+for i in range(0, 6):
     if not(os.path.exists("/dev/rfcomm"+str(i))):
         os.system("sudo rfcomm bind " + str(i) + " " + address_json[str(i)])
 
