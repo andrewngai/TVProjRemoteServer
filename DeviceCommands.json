@@ -2,8 +2,7 @@
   "SHARP":{
     "ON":"POWR1   \r",
     "OFF":"POWR0   \r",
-    "INPUT MAC MINI":"IAVD2   \r",
-    "INPUT APPLE TV":"IAVD3   \r"
+    "INPUT1":"IAVD1   \r",
   },
   "BENQ":{
     "ON":"\r*power=on#\r",
@@ -11,6 +10,7 @@
   },
   "SAMSUNG":{
     "ON":"SAMSUNG_ON_COMMAND",
-    "OFF":"SAMSUNG_OFF_COMMAND"
+    "OFF":"SAMSUNG_OFF_COMMAND",
+    "INPUT1":"SAMSUNG_INPUT1_COMMAND"
   }
 }

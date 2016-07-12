@@ -13,20 +13,22 @@ for i in range(0, 6):
     if not(os.path.exists("/dev/rfcomm"+str(i))):
         os.system("sudo rfcomm bind " + str(i) + " " + address_json[str(i)])
 
-leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
-rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
-annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
-reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
-balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
-fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+# leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+# rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
+# annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
+# reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
+# balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
+# fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+#
+# deviceDictionary = {"0": leftProjSerial,
+#                     "1": rightProjSerial,
+#                     "2": annexTVSerial,
+#                     "3": reverseTVSerial,
+#                     "4": balconyTVSerial,
+#                     "5": fireplaceTVSerial
+#                     }
 
-deviceDictionary = {"0": leftProjSerial,
-                    "1": rightProjSerial,
-                    "2": annexTVSerial
-                    # "3": reverseTVSerial,
-                    # "4": balconyTVSerial,
-                    # "5": fireplaceTVSerial
-                    }
+
 
 
 @app.route('/')
@@ -58,9 +60,7 @@ def set_presets():
                 "tvReverse": "",
                 "tvReverseInput": "",
                 "tvBalcony": "",
-                "tvBalconyInput": "",
-                "tvFireplace": "",
-                "tvFireplaceInput": ""
+                "tvBalconyInput": ""
                 }
 
     presetData["projLeft"] = request.form["projLeft"]
@@ -71,8 +71,6 @@ def set_presets():
     presetData["tvReverseInput"] = request.form["tvReverseInput"]
     presetData["tvBalcony"] = request.form["tvBalcony"]
     presetData["tvBalconyInput"] = request.form["tvBalconyInput"]
-    presetData["tvFireplace"] = request.form["tvFireplace"]
-    presetData["tvFireplaceInput"] = request.form["tvFireplaceInput"]
 
     preset_to_config = request.form["congregationSel"]
     filename = ""
@@ -158,15 +156,66 @@ def status():
 def applypreset():
     """Applies(Executes) a preset"""
     congregationpreset = request.args['congregation']
-    
-    if congregationpreset == "canto":
-        a = 1
-    elif congregationpreset == "eng":
-        a = 2
-    elif congregationpreset == "mando":
-        a = 3
-        
-    return "OKOKOK" + a
+
+    h = open("DeviceCommands.json")
+    commands_json = json.loads(h.read())
+
+    j = open("" + congregationpreset + "Preset.json")
+
+    congragation_json = json.loads(j.read())
+    #############################################################################
+    choice = congragation_json["projLeft"]
+
+    if choice == "on":
+        write_command("0", commands_json["BENQ", "ON"])
+    elif choice == "off":
+        write_command("0", commands_json["BENQ", "OFF"])
+    #############################################################################
+    choice = congragation_json["projRight"]
+
+    if choice == "on":
+        write_command("1", commands_json["BENQ", "ON"])
+    elif choice == "off":
+        write_command("1", commands_json["BENQ", "OFF"])
+    #############################################################################
+    choice = congregationpreset["tvAnnex"]
+
+    if choice == "on":
+        write_command("2", commands_json["SHARP", "ON"])
+    elif choice == "off":
+        write_command("2", commands_json["SHARP", "OFF"])
+    #############################################################################
+    choice = congregationpreset["tvAnnexInput"]
+
+    if choice == "input":
+        write_command("2", commands_json["SHARP", "INPUT1"])
+    #############################################################################
+    choice = congregationpreset["tvReverse"]
+
+    if choice == "on":
+        write_command("3", commands_json["SHARP", "ON"])
+    elif choice == "off":
+        write_command("3", commands_json["SHARP", "OFF"])
+    #############################################################################
+    choice = congregationpreset["tvReverseInput"]
+
+    if choice == "input":
+        write_command("3", commands_json["SHARP", "INPUT1"])
+    #############################################################################
+    choice = congregationpreset["tvBalcony"]
+
+    if choice == "on":
+        write_command("4", commands_json["SHARP", "ON"])
+    elif choice == "off":
+        write_command("4", commands_json["SHARP", "OFF"])
+    #############################################################################
+    choice = congregationpreset["tvBalconyInput"]
+
+    if choice == "input":
+        write_command("4", commands_json["SHARP", "INPUT1"])
+    #############################################################################
+
+    return "OKOKOK"
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
