@@ -23,8 +23,7 @@ function isFormValid(){
     var isTvReverseInputValid   = isFieldValid("tvReverseInput");
     var isTvBalconyValid        = isFieldValid("tvBalcony");
     var isTvBalconyInputValid   = isFieldValid("tvBalconyInput");
-    var isTvFireplaceValid      = isFieldValid("tvFireplace");
-    var isTvFireplaceInputValid = isFieldValid("tvFireplaceInput");
+
 
     return isConSelValid &&
            isProjLeftValid &&
@@ -34,9 +33,7 @@ function isFormValid(){
            isTvReverseValid &&
            isTvReverseInputValid &&
            isTvBalconyValid &&
-           isTvBalconyInputValid &&
-           isTvFireplaceValid &&
-           isTvFireplaceInputValid ;
+           isTvBalconyInputValid ;
 }
 
 
@@ -185,30 +182,6 @@ function applyPreset(){
             break;
         default:
             alert("tvBalconyInput default action");
-    }
-
-    switch(presetJson.tvFireplace){
-        case 'on':
-            document.getElementById("tvFireplaceOnRadio").checked = true;
-            break;
-        case 'off':
-            document.getElementById("tvFireplaceOffRadio").checked = true;
-            break;
-        case 'na':
-            document.getElementById("tvFireplaceNARadio").checked = true;
-            break;
-        default:
-            alert("tvBalcony default action");
-    }
-    switch(presetJson.tvFireplaceInput){
-        case 'input':
-            document.getElementById("tvFireplaceInputDefaultRadio").checked = true;
-            break;
-        case 'na':
-            document.getElementById("tvFireplaceInputNARadio").checked = true;
-            break;
-        default:
-            alert("tvFireplaceInput default action");
     }
 
 }
