@@ -5,8 +5,8 @@
     "INPUT1":"IAVD1   \r",
   },
   "BENQ":{
-    "ON":"\r*power=on#\r",
-    "OFF":"\r*power=off#\r"
+    "ON":"\r*pow=on#\r",
+    "OFF":"\r*pow=off#\r"
   },
   "SAMSUNG":{
     "ON":"SAMSUNG_ON_COMMAND",
