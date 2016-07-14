@@ -1,9 +1,9 @@
-import serial
+import json
 import os
 import os.path
-import json
-from flask import Flask, render_template, request
 
+import serial
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 f = open("deviceMac.json")
@@ -13,22 +13,28 @@ for i in range(0, 6):
     if not(os.path.exists("/dev/rfcomm"+str(i))):
         os.system("sudo rfcomm bind " + str(i) + " " + address_json[str(i)])
 
-leftProjSerial = serial.Serial("/dev/rfcomm0", baudrate=9600)
-rightProjSerial = serial.Serial("/dev/rfcomm1", baudrate=9600)
-annexTVSerial = serial.Serial("/dev/rfcomm2", baudrate=9600)
-reverseTVSerial = serial.Serial("/dev/rfcomm3", baudrate=9600)
-balconyTVSerial = serial.Serial("/dev/rfcomm4", baudrate=9600)
-fireplaceTVSerial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+# Channel 0: Annex TV
+# Channel 1: Reverse TV
+# Channel 2: Balcony TV
+# Channel 3: Left Projector
+# Channel 4: Right Projector
+# Channel 5:
 
-deviceDictionary = {"0": leftProjSerial,
-                    "1": rightProjSerial,
-                    "2": annexTVSerial,
-                    "3": reverseTVSerial,
-                    "4": balconyTVSerial,
-                    "5": fireplaceTVSerial
+
+channel_zero_serial = serial.Serial("/dev/rfcomm0", baudrate=9600)
+channel_one_serial = serial.Serial("/dev/rfcomm1", baudrate=9600)
+channel_two_serial = serial.Serial("/dev/rfcomm2", baudrate=9600)
+channel_three_serial = serial.Serial("/dev/rfcomm3", baudrate=9600)
+channel_four_serial = serial.Serial("/dev/rfcomm4", baudrate=9600)
+channel_five_serial = serial.Serial("/dev/rfcomm5", baudrate=9600)
+
+deviceDictionary = {"0": channel_zero_serial,
+                    "1": channel_one_serial,
+                    "2": channel_two_serial,
+                    "3": channel_three_serial,
+                    "4": channel_four_serial,
+                    "5": channel_five_serial
                     }
-
-
 
 
 @app.route('/')
@@ -38,7 +44,6 @@ def index():
 
 @app.route('/test')
 def testpage():
-    leftProjSerial.write(b"testpage loaded\n")
     return render_template('index.html')
     # return 'testPage'
 
@@ -167,52 +172,52 @@ def applypreset():
     choice = congragation_json["projLeft"]
 
     if choice == "on":
-        write_command("0", commands_json["BENQ", "ON"])
+        write_command("3", commands_json["BENQ", "ON"])
     elif choice == "off":
-        write_command("0", commands_json["BENQ", "OFF"])
+        write_command("3", commands_json["BENQ", "OFF"])
     #############################################################################
     choice = congragation_json["projRight"]
 
     if choice == "on":
-        write_command("1", commands_json["BENQ", "ON"])
+        write_command("4", commands_json["BENQ", "ON"])
     elif choice == "off":
-        write_command("1", commands_json["BENQ", "OFF"])
+        write_command("4", commands_json["BENQ", "OFF"])
     #############################################################################
     choice = congregationpreset["tvAnnex"]
+
+    if choice == "on":
+        write_command("0", commands_json["SHARP", "ON"])
+    elif choice == "off":
+        write_command("0", commands_json["SHARP", "OFF"])
+    #############################################################################
+    choice = congregationpreset["tvAnnexInput"]
+
+    if choice == "input":
+        write_command("0", commands_json["SHARP", "INPUT1"])
+    #############################################################################
+    choice = congregationpreset["tvReverse"]
+
+    if choice == "on":
+        write_command("1", commands_json["SHARP", "ON"])
+    elif choice == "off":
+        write_command("1", commands_json["SHARP", "OFF"])
+    #############################################################################
+    choice = congregationpreset["tvReverseInput"]
+
+    if choice == "input":
+        write_command("1", commands_json["SHARP", "INPUT1"])
+    #############################################################################
+    choice = congregationpreset["tvBalcony"]
 
     if choice == "on":
         write_command("2", commands_json["SHARP", "ON"])
     elif choice == "off":
         write_command("2", commands_json["SHARP", "OFF"])
     #############################################################################
-    choice = congregationpreset["tvAnnexInput"]
-
-    if choice == "input":
-        write_command("2", commands_json["SHARP", "INPUT1"])
-    #############################################################################
-    choice = congregationpreset["tvReverse"]
-
-    if choice == "on":
-        write_command("3", commands_json["SHARP", "ON"])
-    elif choice == "off":
-        write_command("3", commands_json["SHARP", "OFF"])
-    #############################################################################
-    choice = congregationpreset["tvReverseInput"]
-
-    if choice == "input":
-        write_command("3", commands_json["SHARP", "INPUT1"])
-    #############################################################################
-    choice = congregationpreset["tvBalcony"]
-
-    if choice == "on":
-        write_command("4", commands_json["SHARP", "ON"])
-    elif choice == "off":
-        write_command("4", commands_json["SHARP", "OFF"])
-    #############################################################################
     choice = congregationpreset["tvBalconyInput"]
 
     if choice == "input":
-        write_command("4", commands_json["SHARP", "INPUT1"])
+        write_command("2", commands_json["SHARP", "INPUT1"])
     #############################################################################
 
     return "OKOKOK"
