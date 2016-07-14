@@ -1,7 +1,7 @@
 import json
 import os
 import os.path
-
+import exceptions
 import serial
 from flask import Flask, render_template, request
 import sys
@@ -162,8 +162,12 @@ def write_command(channel, data):
 def status():
     rfcomm0 = "online"
     rfcomm1 = "online"
-    if not channel_zero_serial.isOpen():
+    try:
+        channel_zero_serial.write("testing")
+    except Exception:
          rfcomm0 = "offline"
+
+
     if not channel_one_serial.isOpen():
          rfcomm1 = "offline"
     return render_template('status.html', rfcomm0=rfcomm0, rfcomm1=rfcomm1)
