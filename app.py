@@ -58,8 +58,6 @@ def index():
 @app.route('/test')
 def testpage():
     return render_template('index.html')
-    # return 'testPage'
-
 
 @app.route('/sendThings', methods=['POST'])
 def get_results():
@@ -164,10 +162,10 @@ def write_command(channel, data):
 def status():
     rfcomm0 = "online"
     rfcomm1 = "online"
-    # if not btSerial.isOpen():
-    #     rfcomm0 = "offline"
-    # if not btSerial2.isOpen():
-    #     rfcomm1 = "offline"
+    if not channel_zero_serial.isOpen():
+         rfcomm0 = "offline"
+    if not channel_one_serial.isOpen():
+         rfcomm1 = "offline"
     return render_template('status.html', rfcomm0=rfcomm0, rfcomm1=rfcomm1)
 
 
@@ -247,6 +245,7 @@ def restart_system():
     delay = request.args['delay']
     os.system("(sleep " + delay + ";sudo reboot) &")
     return "System restarting in " + delay + " second(s)"
+
 
 @app.route('/pull_new_code')
 def pull_new_code():
