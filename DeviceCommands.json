@@ -2,7 +2,7 @@
   "SHARP":{
     "ON":"POWR1   \r",
     "OFF":"POWR0   \r",
-    "INPUT1":"IAVD1   \r",
+    "INPUT1":"IAVD1   \r"
   },
   "BENQ":{
     "ON":"\r*pow=on#\r",

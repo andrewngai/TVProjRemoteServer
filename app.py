@@ -4,10 +4,23 @@ import os.path
 
 import serial
 from flask import Flask, render_template, request
+import sys
+
+pid = str(os.getpid())
+pidfile = "/tmp/mydaemon.pid"
+
+if os.path.isfile(pidfile):
+    # print "%s already exists, exiting" % pidfile
+    os.system("sudo rm /tmp/mydaemon.pid")
+pidFile = open(pidfile, 'w')
+pidFile.write(pid)
+pidFile.close()
 
 app = Flask(__name__)
-f = open("deviceMac.json")
+f = open("/home/pi/TVProjRemoteServer/deviceMac.json")
 address_json = json.loads(f.read())
+
+os.system("sudo /home/pi/hub-ctrl -h 0 -P 4 -p 0 ; sleep 3; sudo /home/pi/hub-ctrl  -h 0 -P 4 -p 1")
 
 for i in range(0, 6):
     if not(os.path.exists("/dev/rfcomm"+str(i))):
@@ -85,7 +98,7 @@ def set_presets():
         filename = "engPreset.json"
     elif preset_to_config == "mando":
         filename = "mandoPreset.json"
-
+    filename="/home/pi/TVProjRemoteServer/"+filename
     g = open(filename, 'w')
     g.write(json.dumps(presetData))
     g.close()
@@ -103,6 +116,7 @@ def get_config():
     elif request.args['congregation'] == "mando":
         filename = "mandoPreset.json"
 
+    filename="/home/pi/TVProjRemoteServer/"+filename
     if os.path.isfile(filename):
         return open(filename).read()
     else:
@@ -111,7 +125,7 @@ def get_config():
 
 @app.route('/getDeviceCommands', methods=['GET'])
 def get_device_commands():
-    return open("DeviceCommands.json").read()
+    return open("/home/pi/TVProjRemoteServer/DeviceCommands.json").read()
 
 
 @app.route('/presetconfig')
@@ -131,7 +145,7 @@ def send_command():
     device = request.args['device']
     command = request.args['command']
     channel = request.args['channel']
-    h = open("DeviceCommands.json")
+    h = open("/home/pi/TVProjRemoteServer/DeviceCommands.json")
     commands_json = json.loads(h.read())
 
     # TODO
@@ -162,10 +176,10 @@ def applypreset():
     """Applies(Executes) a preset"""
     congregationpreset = request.args['congregation']
 
-    h = open("DeviceCommands.json")
+    h = open("/home/pi/TVProjRemoteServer/DeviceCommands.json")
     commands_json = json.loads(h.read())
 
-    j = open("" + congregationpreset + "Preset.json")
+    j = open("/home/pi/TVProjRemoteServer/" + congregationpreset + "Preset.json")
 
     congragation_json = json.loads(j.read())
     #############################################################################
@@ -221,6 +235,20 @@ def applypreset():
     #############################################################################
 
     return "OKOKOK"
+
+
+@app.route('/system_control')
+def systemcontrolpage():
+    return render_template('systemcontrol.html')
+
+
+@app.route('/system_restart', methods=['GET'])
+def restart_system():
+    delay = request.args['delay']
+    os.system("(sleep " + delay + ";sudo reboot) &")
+    return "System restarting in " + delay + " second(s)"
+
+
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
