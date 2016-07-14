@@ -160,17 +160,25 @@ def write_command(channel, data):
 
 @app.route('/status')
 def status():
-    rfcomm0 = "online"
-    rfcomm1 = "online"
-    try:
-        channel_zero_serial.write("testing")
-    except Exception:
-         rfcomm0 = "offline"
+    rfcomm = {"0": "online",
+              "1": "online",
+              "2": "online",
+              "3": "online",
+              "4": "online",
+              "5": "online"
+              }
+
+    for deviceIndex in range(0, 6):
+        try:
+            deviceDictionary[str(deviceIndex)].write("testing")
+        except Exception:
+            rfcomm[str(deviceIndex)] = "offline"
 
 
-    if not channel_one_serial.isOpen():
-         rfcomm1 = "offline"
-    return render_template('status.html', rfcomm0=rfcomm0, rfcomm1=rfcomm1)
+    return render_template('status.html', \
+                           rfcomm0=rfcomm[str(0)], rfcomm1=rfcomm[str(1)], \
+                           rfcomm2=rfcomm[str(2)], rfcomm3=rfcomm[str(3)], \
+                           rfcomm4=rfcomm[str(4)], rfcomm5=rfcomm[str(5)])
 
 
 @app.route('/applyPreset', methods=['GET'])
