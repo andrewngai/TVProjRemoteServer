@@ -52,7 +52,7 @@ deviceDictionary = {"0": channel_zero_serial,
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('dashboard.html')
 
 
 @app.route('/test')
@@ -133,10 +133,10 @@ def display_config_page():
     return render_template('presetconfig.html')
 
 
-@app.route('/dashboard')
-def display_dashboard():
-    return render_template('dashboard.html')
-
+# @app.route('/dashboard')
+# def display_dashboard():
+#     return render_template('dashboard.html')
+#
 
 @app.route('/sendCommand', methods=['GET'])
 def send_command():
@@ -251,4 +251,4 @@ def restart_system():
 
     
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=80)
