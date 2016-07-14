@@ -248,7 +248,10 @@ def restart_system():
     os.system("(sleep " + delay + ";sudo reboot) &")
     return "System restarting in " + delay + " second(s)"
 
-
+@app.route('/pull_new_code')
+def pull_new_code():
+    os.system("cd /home/pi/TVProjRemoteServer;git pull")
+    return "Pull New Code"
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
