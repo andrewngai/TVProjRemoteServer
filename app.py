@@ -165,7 +165,7 @@ def status():
               "2": "online",
               "3": "online",
               "4": "online",
-              "5": "online"
+              "5": "online"+'0xe29c93'
               }
 
     for deviceIndex in range(0, 6):
