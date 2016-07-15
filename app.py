@@ -160,19 +160,19 @@ def write_command(channel, data):
 
 @app.route('/status')
 def status():
-    rfcomm = {"0": "online",
-              "1": "online",
-              "2": "online",
-              "3": "online",
-              "4": "online",
-              "5": "online"+'0xe29c93'
+    rfcomm = {"0": "online &#9745",
+              "1": "online &#9745",
+              "2": "online &#9745",
+              "3": "online &#9745",
+              "4": "online &#9745",
+              "5": "online &#9745"
               }
 
     for deviceIndex in range(0, 6):
         try:
             deviceDictionary[str(deviceIndex)].write("testing")
         except Exception:
-            rfcomm[str(deviceIndex)] = "offline"
+            rfcomm[str(deviceIndex)] = "offline &#9746"
 
 
     return render_template('status.html', \
