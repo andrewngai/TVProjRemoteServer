@@ -1,7 +1,6 @@
 import json
 import os
 import os.path
-import exceptions
 import serial
 from flask import Flask, render_template, request
 import sys
@@ -160,25 +159,21 @@ def write_command(channel, data):
 
 @app.route('/status')
 def status():
-    rfcomm = {"0": "online &#9745;",
-              "1": "online &#9745;",
-              "2": "online &#9745;",
-              "3": "online &#9745;",
-              "4": "online &#9745;",
-              "5": "online &#9745;"
+    rfcomm = {"0": "online O",
+              "1": "online O",
+              "2": "online O",
+              "3": "online O",
+              "4": "online O",
+              "5": "online O"
               }
 
     for deviceIndex in range(0, 6):
         try:
             deviceDictionary[str(deviceIndex)].write("testing")
         except Exception:
-            rfcomm[str(deviceIndex)] = "offline &#9746;"
+            rfcomm[str(deviceIndex)] = "offline X"
 
-
-    return render_template('status.html', \
-                           rfcomm0=rfcomm[str(0)], rfcomm1=rfcomm[str(1)], \
-                           rfcomm2=rfcomm[str(2)], rfcomm3=rfcomm[str(3)], \
-                           rfcomm4=rfcomm[str(4)], rfcomm5=rfcomm[str(5)])
+    return render_template('status.html', rfcomm0=rfcomm[str(0)], rfcomm1=rfcomm[str(1)], rfcomm2=rfcomm[str(2)], rfcomm3=rfcomm[str(3)], rfcomm4=rfcomm[str(4)], rfcomm5=rfcomm[str(5)])
 
 
 @app.route('/applyPreset', methods=['GET'])
