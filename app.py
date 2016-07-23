@@ -19,7 +19,7 @@ app = Flask(__name__)
 f = open("/home/pi/TVProjRemoteServer/deviceMac.json")
 address_json = json.loads(f.read())
 
-os.system("sudo /home/pi/hub-ctrl.c/hubctrl -h 0 -P 4 -p 0 ; sleep 3; sudo /home/pi/hub-ctrl.c/hubctrl  -h 0 -P 4 -p 1")
+#os.system("sudo /home/pi/hub-ctrl.c/hubctrl -h 0 -P 4 -p 0 ; sleep 3; sudo /home/pi/hub-ctrl.c/hubctrl  -h 0 -P 4 -p 1")
 
 for i in range(0, 6):
     if not(os.path.exists("/dev/rfcomm"+str(i))):
