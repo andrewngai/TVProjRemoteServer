@@ -150,7 +150,7 @@ def send_command():
     # implement deviceDictionary for different btSerial
 
     # return write_command(channel, commands_json[device][command])
-    return deviceDictionary[channel].write(commands_json[device][command])
+    return deviceDictionary[channel].write(bytes(commands_json[device][command],'UTF-8'))
 
 
 def write_command(channel, data):
