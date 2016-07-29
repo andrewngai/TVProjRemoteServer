@@ -253,7 +253,7 @@ def systemcontrolpage():
 @app.route('/system_restart', methods=['GET'])
 def restart_system():
     delay = request.args['delay']
-    os.system("(sudo kill " + os.getpid() + ";sudo python /home/pi/TVProjRemoteServer/app.py) &")
+    os.system("(sudo kill " + str(os.getpid()) + ";sudo python /home/pi/TVProjRemoteServer/app.py) &")
     return "System restarting in " + delay + " second(s)"
 
 
