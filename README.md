@@ -9,7 +9,7 @@ Schematic: <br/>
 
 Notes:<br />
 To add new bluetooth receivers:<br />
-1. modify /etc/bluetooth/rfcomm.conf<br />
+1. <strike>modify /etc/bluetooth/rfcomm.conf</strike><br />
 2. Go into bluetoothctl<br />
 3. Trust device <br />
 4. "agent NoInputNoOutput"<br />
